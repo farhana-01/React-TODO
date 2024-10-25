@@ -3,10 +3,7 @@ import {
   Container,
   TextField,
   Button,
-  List,
-  ListItem,
   IconButton,
-  Paper,
   Box,
   Typography
 } from '@mui/material';
@@ -16,7 +13,6 @@ const TodoApp = () => {
   const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState('');
 
-  // Load tasks from localStorage on initial render
   useEffect(() => {
     const savedTasks = JSON.parse(localStorage.getItem('tasks'));
     if (savedTasks) {
@@ -24,27 +20,24 @@ const TodoApp = () => {
     }
   }, []);
 
-  // Save tasks to localStorage whenever the task list changes
   useEffect(() => {
     localStorage.setItem('tasks', JSON.stringify(tasks));
   }, [tasks]);
 
-  // Handle input change
+
   const handleInputChange = (e) => {
     setNewTask(e.target.value);
   };
 
-  // Add new task to the list
   const addTask = () => {
     if (newTask.trim() === '' || tasks.some((task) => task.text === newTask)) {
-      return; // Prevent adding empty or duplicate tasks
+      return; 
     }
     const newTaskObj = { text: newTask, completed: false };
     setTasks([...tasks, newTaskObj]);
-    setNewTask(''); // Clear input field
+    setNewTask('');
   };
 
-  // Remove task from the list
   const removeTask = (index) => {
     const updatedTasks = tasks.filter((_, i) => i !== index);
     setTasks(updatedTasks);
@@ -53,7 +46,7 @@ const TodoApp = () => {
   return (
     <Box
       sx={{
-        backgroundColor: '#ce93d8', // Light pink background
+        backgroundColor: '#ce93d8', 
         minHeight: '100vh',
         padding: '2rem',
         display: 'flex',
@@ -62,12 +55,12 @@ const TodoApp = () => {
         flexDirection: 'column'
       }}
     >
-      {/* Card for ToDo input */}
-      <Paper
+
+      <Box
         elevation={3}
         sx={{
           padding: '2rem',
-          backgroundColor: '#ab47bc', // Light blue background for card
+          backgroundColor: '#ab47bc',
           borderRadius: '10px',
           textAlign: 'center'
         }}
@@ -93,7 +86,7 @@ const TodoApp = () => {
           <Button
             variant="contained"
             sx={{
-              backgroundColor: '#f50057', // Red button
+              backgroundColor: '#f50057', 
               color: 'white',
               '&:hover': { backgroundColor: '#4a148c' }
             }}
@@ -102,12 +95,11 @@ const TodoApp = () => {
             Add +
           </Button>
         </Box>
-      </Paper>
+      </Box>
 
-      {/* List of tasks */}
-      <List sx={{ marginTop: '2rem', width: '100%', maxWidth: '400px' }}>
+      <Box sx={{ marginTop: '2rem', width: '100%', maxWidth: '400px' }}>
         {tasks.map((task, index) => (
-          <Paper
+          <Box
             key={index}
             elevation={2}
             sx={{
@@ -116,20 +108,20 @@ const TodoApp = () => {
               alignItems: 'center',
               padding: '0.5rem',
               marginBottom: '0.5rem',
-              backgroundColor: '#e3f2fd', // White background for tasks
+              backgroundColor: '#e3f2fd', 
               borderRadius: '5px'
             }}
           >
             <Typography>{task.text}</Typography>
             <IconButton
               onClick={() => removeTask(index)}
-              sx={{ color: '#ff6b6b' }} // Red delete button
+              sx={{ color: '#ff6b6b' }} 
             >
               <DeleteIcon />
             </IconButton>
-          </Paper>
+          </Box>
         ))}
-      </List>
+      </Box>
     </Box>
   );
 };
